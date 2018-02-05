@@ -63,10 +63,8 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'rest_framework.authtoken',
     'rest_auth',
-    'nfdcore',
+    'core',
     'nfdusers',
-    'nfdrenderers'
-    
 ]
 
 MIDDLEWARE = [
@@ -136,15 +134,15 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-        'nfdrenderers.XlsxRenderer',
-        'nfdrenderers.CsvRenderer',
-        'nfdrenderers.ShpRenderer',
+        'core.renderers.xlsx.XlsxRenderer',
+        'core.renderers.csv.CsvRenderer',
+        'core.renderers.shp.ShpRenderer',
     )
 }
 
 
 JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'nfdcore.jwtutils.jwt_response_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'core.jwtutils.jwt_response_payload_handler',
     'JWT_ALLOW_REFRESH': True,
     #'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
     #'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7)
@@ -270,7 +268,7 @@ LANGUAGES = [
   ('en', _('English'))
 ]
 LOCALE_PATHS = [
-    BASE_DIR + '/nfdcore/locale',
+    BASE_DIR + '/core/locale',
     BASE_DIR + '/locale',
 ]
 print LOCALE_PATHS

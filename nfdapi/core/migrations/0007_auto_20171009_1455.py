@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nfdcore', '0006_auto_20170929_1425'),
+        ('core', '0006_auto_20170929_1425'),
     ]
 
     operations = [
@@ -108,17 +108,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='elementnaturalareas',
             name='aspect',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.Aspect'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Aspect'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='disturbance_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.DisturbanceType'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.DisturbanceType'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='earthworm_evidence',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.EarthwormEvidence'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.EarthwormEvidence'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
@@ -128,96 +128,96 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='elementnaturalareas',
             name='slope',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.Slope'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Slope'),
         ),
         migrations.AddField(
             model_name='occurrencenaturalarea',
             name='details',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.ElementNaturalAreas'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.ElementNaturalAreas'),
         ),
         migrations.AlterField(
             model_name='coniferdetails',
             name='disturbance_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.DisturbanceType'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.DisturbanceType'),
         ),
         migrations.AlterField(
             model_name='coniferdetails',
             name='earthworm_evidence',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.EarthwormEvidence'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.EarthwormEvidence'),
         ),
         migrations.AlterField(
             model_name='elementnaturalareas',
             name='landscape_position',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.LandscapePosition'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.LandscapePosition'),
         ),
         migrations.AlterField(
             model_name='ferndetails',
             name='disturbance_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.DisturbanceType'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.DisturbanceType'),
         ),
         migrations.AlterField(
             model_name='ferndetails',
             name='earthworm_evidence',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.EarthwormEvidence'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.EarthwormEvidence'),
         ),
         migrations.AlterField(
             model_name='floweringplantdetails',
             name='disturbance_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.DisturbanceType'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.DisturbanceType'),
         ),
         migrations.AlterField(
             model_name='floweringplantdetails',
             name='earthworm_evidence',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.EarthwormEvidence'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.EarthwormEvidence'),
         ),
         migrations.AlterField(
             model_name='mossdetails',
             name='disturbance_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.DisturbanceType'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.DisturbanceType'),
         ),
         migrations.AlterField(
             model_name='mossdetails',
             name='earthworm_evidence',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.EarthwormEvidence'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='core.EarthwormEvidence'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='bedrock_and_outcrops',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.BedrockAndOutcrops'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.BedrockAndOutcrops'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='condition',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.NaturalAreaCondition'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.NaturalAreaCondition'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='glaciar_diposit',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.GlacialDeposit'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.GlacialDeposit'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='leap_land_cover_category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.LeapLandCover'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.LeapLandCover'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='pleistocene_glaciar_diposit',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.GlacialDepositPleistoceneAge'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.GlacialDepositPleistoceneAge'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='regional_frequency',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.RegionalFrequency'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.RegionalFrequency'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='sensitivity',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.CMSensitivity'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.CMSensitivity'),
         ),
         migrations.AddField(
             model_name='elementnaturalareas',
             name='type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.NaturalAreaType'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.NaturalAreaType'),
         ),
     ]

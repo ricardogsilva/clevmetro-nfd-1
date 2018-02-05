@@ -14,7 +14,7 @@ from django.template.defaultfilters import date
 from easy_pdf.rendering import render_to_pdf
 from rest_framework.renderers import BaseRenderer
 
-from nfdcore import models
+from core import models
 
 TableCell = namedtuple("TableCell", [
     "value",
@@ -63,7 +63,7 @@ class PdfOccurrenceStatsRenderer(BaseRenderer):
                 ),
             }
         return render_to_pdf(
-            "nfdrenderers/pdf/aggregation_stats.html",
+            "core/pdf/aggregation_stats.html",
             context
         )
 
@@ -152,7 +152,8 @@ class PdfLayerDetailRenderer(BaseRenderer):
     format = "pdf"
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
-        if data["geom"] is not None:
+        print("data: {}".format(data))
+        if data.get("geom") is not None:
             geom = json.loads(data["geom"])
             lat, lon = geom["coordinates"]
         else:
@@ -161,7 +162,7 @@ class PdfLayerDetailRenderer(BaseRenderer):
         gender = models.Gender.objects.get(code=data["details.gender"])
         no_data = "-"
         return render_to_pdf(
-            "nfdrenderers/pdf/layer_detail.html",
+            "core/pdf/layer_detail.html",
             {
                 "species": {
                     "common_name": data["species.first_common"],

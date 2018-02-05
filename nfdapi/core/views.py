@@ -32,7 +32,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.viewsets import ModelViewSet
 import reversion
 
-from nfdrenderers import pdf as pdfrenderers
+from .renderers import pdf as pdfrenderers
 
 from . import models
 from .models import (
@@ -43,7 +43,7 @@ from .models import (
     Photograph,
     Species,
 )
-from . import nfdserializers
+from . import serializers
 from .permissions import (
     CanCreateAnimals,
     CanUpdateFeatureType,
@@ -210,7 +210,7 @@ class OccurrenceAggregatorViewSet(viewsets.ViewSet):
         BrowsableAPIRenderer,
         pdfrenderers.PdfOccurrenceStatsRenderer,
     )
-    serializer_class = nfdserializers.OccurrenceAggregatorSerializer
+    serializer_class = serializers.OccurrenceAggregatorSerializer
 
     def list(self, request):
         filterer = TaxonomyFilterer.from_query_params(request.query_params)
@@ -305,7 +305,7 @@ class NfdLayer(ListCreateAPIView):
         raise NotImplementedError
 
     def get_serializer_class(self):
-        return nfdserializers.LayerSerializer
+        return serializers.LayerSerializer
 
     def get_serializer(self, instance=None, data=empty, many=False,
                        partial=False):
@@ -320,7 +320,7 @@ class NfdLayer(ListCreateAPIView):
                                         is_publisher=is_publisher)
             else:
                 is_writer_or_publisher = (is_writer or is_publisher)
-                return nfdserializers.LayerSerializer(
+                return serializers.LayerSerializer(
                     data=data,
                     many=many,
                     is_writer_or_publisher=is_writer_or_publisher
@@ -393,7 +393,7 @@ class PlantLayer(NfdLayer):
     filter_class = TaxonFilter
 
     def get_post_serializer_class(self):
-        return nfdserializers.TaxonOccurrenceSerializer
+        return serializers.TaxonOccurrenceSerializer
 
     def get_base_queryset(self):
         return OccurrenceTaxon.objects.filter(
@@ -409,7 +409,7 @@ class AnimalLayer(NfdLayer):
     filter_class = TaxonFilter
 
     def get_post_serializer_class(self):
-        return nfdserializers.TaxonOccurrenceSerializer
+        return serializers.TaxonOccurrenceSerializer
 
     def get_base_queryset(self):
         return OccurrenceTaxon.objects.filter(
@@ -425,7 +425,7 @@ class FungusLayer(NfdLayer):
     filter_class = TaxonFilter
 
     def get_post_serializer_class(self):
-        return nfdserializers.TaxonOccurrenceSerializer
+        return serializers.TaxonOccurrenceSerializer
 
     def get_base_queryset(self):
         return OccurrenceTaxon.objects.filter(
@@ -441,7 +441,7 @@ class SlimeMoldLayer(NfdLayer):
     filter_class = TaxonFilter
 
     def get_post_serializer_class(self):
-        return nfdserializers.TaxonOccurrenceSerializer
+        return serializers.TaxonOccurrenceSerializer
 
     def get_base_queryset(self):
         return OccurrenceTaxon.objects.filter(
@@ -457,7 +457,7 @@ class NaturalAreaLayer(NfdLayer):
     filter_class = NaturalAreaFilter
 
     def get_post_serializer_class(self):
-        return nfdserializers.NaturalAreaOccurrenceSerializer
+        return serializers.NaturalAreaOccurrenceSerializer
 
     def get_base_queryset(self):
         return OccurrenceNaturalArea.objects.all()
@@ -504,7 +504,7 @@ class TaxonList(NfdList):
     filter_class = TaxonFilter
 
     def get_serializer_class(self):
-        return nfdserializers.TaxonListSerializer
+        return serializers.TaxonListSerializer
 
     def get_base_queryset(self):
         return OccurrenceTaxon.objects.filter(
@@ -547,7 +547,7 @@ class NaturalAreaList(NfdList):
         return OccurrenceNaturalArea.objects.all()
 
     def get_serializer_class(self):
-        return nfdserializers.NaturalAreaListSerializer
+        return serializers.NaturalAreaListSerializer
 
     def get_main_cat(self):
         return "naturalarea"
@@ -584,10 +584,10 @@ class LayerDetail(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
         if isinstance(feature, OccurrenceNaturalArea):
-            serializer = nfdserializers.NaturalAreaOccurrenceSerializer(
+            serializer = serializers.NaturalAreaOccurrenceSerializer(
                 feature, is_writer=is_writer, is_publisher=is_publisher)
         else:
-            serializer = nfdserializers.TaxonOccurrenceSerializer(
+            serializer = serializers.TaxonOccurrenceSerializer(
                 feature, is_writer=is_writer, is_publisher=is_publisher)
         return Response(serializer.data)
 
@@ -596,12 +596,12 @@ class LayerDetail(APIView):
                                                     occurrence_maincat)
         feature = self.get_object(occurrence_maincat, pk)
         if isinstance(feature, OccurrenceNaturalArea):
-            serializer = nfdserializers.NaturalAreaOccurrenceSerializer(
+            serializer = serializers.NaturalAreaOccurrenceSerializer(
                 feature, data=request.data, is_writer=is_writer,
                 is_publisher=is_publisher
             )
         else:
-            serializer = nfdserializers.TaxonOccurrenceSerializer(
+            serializer = serializers.TaxonOccurrenceSerializer(
                 feature, data=request.data, is_writer=is_writer,
                 is_publisher=is_publisher
             )
@@ -613,7 +613,7 @@ class LayerDetail(APIView):
     def delete(self, request, occurrence_maincat, pk, format=None):
         feature = self.get_object(occurrence_maincat, pk)
         with reversion.create_revision():
-            nfdserializers.delete_object_and_children(feature)
+            serializers.delete_object_and_children(feature)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -626,7 +626,7 @@ class LayerVersionDetail(APIView):
                                                         occurrence_maincat)
             instance = get_occurrence_model(
                 occurrence_maincat).objects.get(pk=pk)
-            serializer = nfdserializers.OccurrenceVersionSerializer()
+            serializer = serializers.OccurrenceVersionSerializer()
             excude_unreleased = not (is_writer or is_publisher)
             serialized = serializer.get_version(
                 instance, int(version), excude_unreleased)
@@ -648,7 +648,7 @@ class LayerVersionDetail(APIView):
 
 class PhotoViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated, CanWriteOrUpdateAny]
-    serializer_class = nfdserializers.PhotographPublishSerializer
+    serializer_class = serializers.PhotographPublishSerializer
     parser_classes = (MultiPartParser, FormParser,)
     queryset = Photograph.objects.all()
 
@@ -660,13 +660,13 @@ def get_feature_type(request, occurrence_subcat, feature_id=None):
             feat = OccurrenceNaturalArea.objects.get(pk=feature_id)
         else:
             feat = OccurrenceTaxon.objects.get(pk=feature_id)
-        serializer = nfdserializers.FeatureTypeSerializer(feat.occurrence_cat)
+        serializer = serializers.FeatureTypeSerializer(feat.occurrence_cat)
     else:
         # in this case we get the category code instead of the main category
         occurrence_cat = OccurrenceCategory.objects.get(code=occurrence_subcat)
         (is_writer, is_publisher) = get_permissions(request.user,
                                                     occurrence_cat.main_cat)
-        serializer = nfdserializers.FeatureTypeSerializer(
+        serializer = serializers.FeatureTypeSerializer(
             occurrence_cat,
             is_writer=is_writer,
             is_publisher=is_publisher
@@ -684,7 +684,7 @@ class SpeciesPaginationClass(PageNumberPagination):
 
 class SpeciesSearch(ListAPIView):
     queryset = Species.objects.all()
-    serializer_class = nfdserializers.SpeciesSearchSerializer
+    serializer_class = serializers.SpeciesSearchSerializer
     filter_backends = (SearchFilter,)
     pagination_class = SpeciesPaginationClass
     search_fields = (
@@ -698,7 +698,7 @@ class SpeciesSearch(ListAPIView):
 
 class SpeciesDetail(RetrieveAPIView):
     queryset = Species.objects.all()
-    serializer_class = nfdserializers.SpeciesSearchResultSerializer
+    serializer_class = serializers.SpeciesSearchResultSerializer
     search_fields = (
         'first_common',
         'name_sci',

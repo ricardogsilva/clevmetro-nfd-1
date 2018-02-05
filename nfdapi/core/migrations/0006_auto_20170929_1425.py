@@ -10,7 +10,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nfdcore', '0005_auto_20170919_1506'),
+        ('core', '0005_auto_20170919_1506'),
     ]
 
     operations = [
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('county', models.TextField(blank=True, default='', null=True)),
                 ('quad_name', models.TextField(blank=True, default='', null=True)),
                 ('quad_number', models.TextField(blank=True, default='', null=True)),
-                ('reservation', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.Reservation')),
+                ('reservation', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Reservation')),
             ],
             options={
                 'abstract': False,
@@ -69,26 +69,26 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='taxonlocation',
             name='watershed',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.Watershed'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Watershed'),
         ),
         migrations.AddField(
             model_name='naturalarealocation',
             name='reservation',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.Reservation'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Reservation'),
         ),
         migrations.AddField(
             model_name='naturalarealocation',
             name='watershed',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='nfdcore.Watershed'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.Watershed'),
         ),
         migrations.AddField(
             model_name='occurrencenaturalarea',
             name='location',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.NaturalAreaLocation'),
+            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='core.NaturalAreaLocation'),
         ),
         migrations.AddField(
             model_name='occurrencetaxon',
             name='location',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='nfdcore.TaxonLocation'),
+            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='core.TaxonLocation'),
         ),
     ]
